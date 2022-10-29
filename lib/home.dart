@@ -33,17 +33,29 @@ class _homeState extends State<home> {
         centerTitle: true,
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TextField(
-            onSubmitted: (text) {
-              setState(() {
-                city = text;
-              });
-            },
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                labelText: 'Enter Name',
-                hintText: 'Enter Your Name'),
+          Padding(
+            padding: EdgeInsets.all(50),
+            child: TextField(
+              onSubmitted: (text) {
+                setState(() {
+                  city = text;
+                });
+              },
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Enter City',
+                  hintText: 'Enter City Name'),
+            ),
+          ),
+          Text(
+            "$city",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 20,
           ),
           FutureBuilder<Weather?>(
             future: fetchData(),
@@ -54,17 +66,57 @@ class _homeState extends State<home> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        weather.temperature.toString(),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Temperature : ",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            weather.temperature.toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                      Text(weather.humidity.toString(),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text(weather.cloudiness.toString(),
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Pressure : ",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            weather.pressure.toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Weather Description : ",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            weather.weatherDescription.toString(),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 );
