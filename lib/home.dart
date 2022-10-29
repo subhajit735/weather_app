@@ -28,109 +28,122 @@ class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Weather App"),
-        centerTitle: true,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    
+      body: Stack(
         children: [
-          Padding(
-            padding: EdgeInsets.all(50),
-            child: TextField(
-              onSubmitted: (text) {
-                setState(() {
-                  city = text;
-                });
-              },
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter City',
-                  hintText: 'Enter City Name'),
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage("https://i.redd.it/ihfnlpbze7o01.jpg"),
+                  fit: BoxFit.fill),
             ),
           ),
-          Text(
-            "$city",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          FutureBuilder<Weather?>(
-            future: fetchData(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                Weather weather = snapshot.data;
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
+          Column(
+            
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              
+              Padding(
+                padding: EdgeInsets.all(50),
+                child: TextField(
+                  onSubmitted: (text) {
+                    setState(() {
+                      city = text;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter City',
+                      hintText: 'Enter City Name'),
+                ),
+              ),
+              Text(
+                "$city",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              FutureBuilder<Weather?>(
+                future: fetchData(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    Weather weather = snapshot.data;
+                    return Center(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Temperature : ",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Temperature : ",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                weather.temperature.toString(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
-                          Text(
-                            weather.temperature.toString(),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                          SizedBox(
+                            height: 20,
+                          ),  Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Weather Description : ",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                weather.weatherDescription.toString(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
+                          SizedBox(height: 20,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Pressure : ",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                weather.pressure.toString(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        
                         ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Pressure : ",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            weather.pressure.toString(),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Weather Description : ",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            weather.weatherDescription.toString(),
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(error ?? 'Getting your weather...'),
-                    CircularProgressIndicator(),
-                  ],
-                ));
-              }
-            },
+                    );
+                  } else {
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(error ?? 'Getting your weather...'),
+                        CircularProgressIndicator(),
+                      ],
+                    ));
+                  }
+                },
+              ),
+            ],
           ),
         ],
       ),
